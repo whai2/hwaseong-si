@@ -35,7 +35,7 @@ const S = {
     height: calc(100vh - 116px);
     overflow: hidden;
     border-radius: 16px;
-    background-color: #fff;
+    background-color: #F5F5F5;
     z-index: 1000000000 !important;
     box-shadow: rgba(255, 255, 255, 0.12) 0px 0px 2px 0px inset,
       rgba(0, 0, 0, 0.05) 0px 0px 2px 1px, rgba(0, 0, 0, 0.3) 0px 12px 60px;
