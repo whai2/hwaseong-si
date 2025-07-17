@@ -1,9 +1,13 @@
+import { useChat } from "@features/chat";
 import { QuickTapList } from "./constants/quickTapList";
 
 import styled from "@emotion/styled";
 
 function QuickTaps({ quickTap }: { quickTap: (typeof QuickTapList)[0] }) {
   const { title, items, icon } = quickTap;
+  const { handleStartSSEStream, session } = useChat();
+
+  console.log("session", session);
 
   return (
     <S.Container>
@@ -12,7 +16,12 @@ function QuickTaps({ quickTap }: { quickTap: (typeof QuickTapList)[0] }) {
         <S.Title>{title}</S.Title>
       </S.TitleContainer>
       {items.map((item) => (
-        <S.Item key={item.text}>
+        <S.Item
+          key={item.text}
+          onClick={() => {
+            handleStartSSEStream(item.text);
+          }}
+        >
           <S.Text>{item.text}</S.Text>
         </S.Item>
       ))}
