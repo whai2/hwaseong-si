@@ -1,5 +1,6 @@
 import { useState } from "react";
 
+import { useChat } from "@features/chat";
 import { useHandleInputSize } from "./hooks/useHandleInputSize";
 
 import styled from "@emotion/styled";
@@ -8,6 +9,7 @@ import { ReactComponent as SendIcon } from "./assets/send.svg";
 function BottomInput() {
   const [text, setText] = useState("");
   const { textareaRef } = useHandleInputSize(text);
+  const { handleStartSSEStream } = useChat();
 
   const handleInputChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     setText(event.target.value);
@@ -16,15 +18,12 @@ function BottomInput() {
   const handleKeyDown = async (
     event: React.KeyboardEvent<HTMLTextAreaElement>
   ) => {
-    if (
-      event.key === "Enter" &&
-      !event.shiftKey &&
-      !event.nativeEvent.isComposing
-    ) {
+    if (event.key === "Enter" && !event.nativeEvent.isComposing) {
       event.preventDefault();
 
       if (text.trim() !== "") {
-        console.log(text);
+        handleStartSSEStream(text);
+        setText("");
       }
     }
   };

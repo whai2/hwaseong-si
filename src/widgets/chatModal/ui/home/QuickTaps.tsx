@@ -5,9 +5,7 @@ import styled from "@emotion/styled";
 
 function QuickTaps({ quickTap }: { quickTap: (typeof QuickTapList)[0] }) {
   const { title, items, icon } = quickTap;
-  const { handleStartSSEStream, session } = useChat();
-
-  console.log("session", session);
+  const { handleStartSSEStream } = useChat();
 
   return (
     <S.Container>
