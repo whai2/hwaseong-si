@@ -11,7 +11,7 @@ import styled from "@emotion/styled";
 
 function TopBar({ setVisible }: { setVisible: (visible: boolean) => void }) {
   const { setCurrentPage, currentPage } = useNavigate();
-  const { isLoading } = useChat();
+  const { isLoading, title } = useChat();
 
   return (
     <S.Container>
@@ -28,6 +28,11 @@ function TopBar({ setVisible }: { setVisible: (visible: boolean) => void }) {
         <S.CloseIcon onClick={() => setVisible(false)} />
       )}
       <S.NavigationContainer>
+        {currentPage === ROUTES.CHAT && title && (
+          <S.TitleContainer>
+            <S.Title>{title}</S.Title>
+          </S.TitleContainer>
+        )}
         <S.Icon
           as={NewChatIcon}
           onClick={() => {
@@ -88,5 +93,27 @@ const S = {
     &:hover {
       color: #000;
     }
+  `,
+
+  TitleContainer: styled.div`
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+    overflow: hidden;
+    width: 100%;
+    padding-right: 10px;
+    padding-left: 10px;
+    padding-top: 2px;
+  `,
+
+  Title: styled.span`
+    overflow: hidden;
+    color: #000;
+    text-overflow: ellipsis;
+    font-family: Pretendard;
+    font-size: 15.048px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 14px;
   `,
 };
