@@ -9,6 +9,8 @@ export interface ChatType {
 
 interface ChatStore {
   session: ChatType[];
+  isLoading: boolean;
+  setIsLoading: (isLoading: boolean) => void;
   setCurrentChat: (chat: ChatType) => void;
   updateWithStream: (message: string) => void;
   startSSEStream: (userMessage: string) => void;
@@ -16,6 +18,9 @@ interface ChatStore {
 
 export const useChatStore = create<ChatStore>((set, get) => ({
   session: [],
+  isLoading: false,
+
+  setIsLoading: (isLoading: boolean) => set({ isLoading }),
 
   setCurrentChat: (chat: ChatType) =>
     set((state) => ({
@@ -43,6 +48,7 @@ export const useChatStore = create<ChatStore>((set, get) => ({
   // SSE 스트림 시작 함수 추가
   startSSEStream: async (userMessage: string) => {
     // 1. user 메시지 먼저 추가
+    get().setIsLoading(true);
     get().setCurrentChat({ type: "user", message: userMessage });
 
     const decoder = new TextDecoder();
@@ -53,7 +59,10 @@ export const useChatStore = create<ChatStore>((set, get) => ({
 
     while (true) {
       const { done, value } = await reader.read();
-      if (done) return;
+      if (done) {
+        get().setIsLoading(false);
+        return;
+      }
 
       const chunk = decoder.decode(value, { stream: true });
       const lines = chunk.split("\n");

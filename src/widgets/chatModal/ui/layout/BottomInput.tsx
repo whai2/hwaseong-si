@@ -3,13 +3,14 @@ import { useState } from "react";
 import { useChat } from "@features/chat";
 import { useHandleInputSize } from "./hooks/useHandleInputSize";
 
+import { css } from "@emotion/react";
 import styled from "@emotion/styled";
 import { ReactComponent as SendIcon } from "./assets/send.svg";
 
 function BottomInput() {
   const [text, setText] = useState("");
   const { textareaRef } = useHandleInputSize(text);
-  const { handleStartSSEStream } = useChat();
+  const { handleStartSSEStream, isLoading } = useChat();
 
   const handleInputChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     setText(event.target.value);
@@ -21,7 +22,7 @@ function BottomInput() {
     if (event.key === "Enter" && !event.nativeEvent.isComposing) {
       event.preventDefault();
 
-      if (text.trim() !== "") {
+      if (text.trim() !== "" && !isLoading) {
         handleStartSSEStream(text);
         setText("");
       }
@@ -49,12 +50,12 @@ function BottomInput() {
         <S.SendButton>
           <S.AnswerStylesBox>
             <S.Text
-              $isTextInput={true}
-              $disabled={false}
+              $isTextInput={text.trim() !== ""}
+              $disabled={isLoading}
               $isAnswerStylesOpen={false}
             ></S.Text>
           </S.AnswerStylesBox>
-          <S.SendIcon $isTextInput={true} $disabled={false} />
+          <S.SendIcon $isTextInput={text.trim() !== ""} $disabled={isLoading} />
         </S.SendButton>
       </S.ChatInputContainer>
     </S.Container>
@@ -143,10 +144,15 @@ const S = {
     height: 22px;
     color: ${({ $isTextInput, $disabled }) =>
       $disabled ? "gray" : $isTextInput ? "#FF5200" : "gray"};
-    cursor: ${({ $disabled }) => ($disabled ? "not-allowed" : "pointer")};
 
     flex-shrink: 0;
     cursor: pointer;
+
+    ${({ $disabled }) =>
+      $disabled &&
+      css`
+        cursor: not-allowed;
+      `}
   `,
 
   AnswerStylesBox: styled.div<{ $disabled?: boolean }>`
