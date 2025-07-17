@@ -3,10 +3,16 @@ import TopBar from "./TopBar";
 
 import styled from "@emotion/styled";
 
-function Layout({ children }: { children: React.ReactNode }) {
+function Layout({
+  children,
+  setVisible,
+}: {
+  children: React.ReactNode;
+  setVisible: (visible: boolean) => void;
+}) {
   return (
     <S.Layout>
-      <TopBar />
+      <TopBar setVisible={setVisible} />
       <S.Body>{children}</S.Body>
       <BottomInput />
     </S.Layout>

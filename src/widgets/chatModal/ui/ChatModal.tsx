@@ -25,7 +25,7 @@ function ChatModal() {
   return (
     <>
       <S.Modal visible={visible} isFirst={isFirst}>
-        <Layout>
+        <Layout setVisible={setVisible}>
           {currentPage === ROUTES.HOME && <Home />}
           {currentPage === ROUTES.CHAT && <Chat />}
         </Layout>
