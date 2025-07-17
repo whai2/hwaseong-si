@@ -1,8 +1,10 @@
 import { useState } from "react";
 
-import Layout from "./layout/Layout";
+import Chat from "./chat/Chat";
 import Home from "./home/Home";
-// import Chat from "./chat/Chat";
+import Layout from "./layout/Layout";
+
+import { ROUTES, useNavigate } from "@entities/navigate";
 
 import ChatIcon from "@shared/assets/logo.png";
 
@@ -10,6 +12,8 @@ import { css, keyframes } from "@emotion/react";
 import styled from "@emotion/styled";
 
 function ChatModal() {
+  const { currentPage } = useNavigate();
+
   const [visible, setVisible] = useState(false);
   const [isFirst, setIsFirst] = useState(true);
 
@@ -22,8 +26,8 @@ function ChatModal() {
     <>
       <S.Modal visible={visible} isFirst={isFirst}>
         <Layout>
-          <Home />
-          {/* <Chat /> */}
+          {currentPage === ROUTES.HOME && <Home />}
+          {currentPage === ROUTES.CHAT && <Chat />}
         </Layout>
       </S.Modal>
       <S.FloatingButton onClick={handleClick}>

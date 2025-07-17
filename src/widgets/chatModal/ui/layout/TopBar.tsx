@@ -1,3 +1,5 @@
+import { ROUTES, useNavigate } from "@entities/navigate";
+
 import { ReactComponent as ArrowBackIcon } from "./assets/arrowBack.svg";
 // import { ReactComponent as HistoryIcon } from "./assets/history.svg";
 import { ReactComponent as NewChatIcon } from "./assets/newChat.svg";
@@ -5,11 +7,13 @@ import { ReactComponent as NewChatIcon } from "./assets/newChat.svg";
 import styled from "@emotion/styled";
 
 function TopBar() {
+  const { setCurrentPage } = useNavigate();
+
   return (
     <S.Container>
       <S.Icon as={ArrowBackIcon} />
       <S.NavigationContainer>
-        <S.Icon as={NewChatIcon} />
+        <S.Icon as={NewChatIcon} onClick={() => setCurrentPage(ROUTES.HOME)} />
         {/* <S.Icon as={HistoryIcon} /> */}
       </S.NavigationContainer>
     </S.Container>

@@ -1,5 +1,9 @@
+import { useChat } from "@features/chat";
+
 function Chat() {
-  return <div>Chat</div>;
+  const { session } = useChat();
+
+  return <div>{session.map((item) => item.message)}</div>;
 }
 
 export default Chat;
