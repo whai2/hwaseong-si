@@ -1,3 +1,4 @@
+import TopBar from "./TopBar";
 import BottomInput from "./BottomInput";
 
 import styled from "@emotion/styled";
@@ -5,7 +6,7 @@ import styled from "@emotion/styled";
 function Layout({ children }: { children: React.ReactNode }) {
   return (
     <S.Layout>
-      {/* <TopBar /> */}
+      <TopBar />
       {children}
       <BottomInput />
     </S.Layout>

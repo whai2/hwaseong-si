@@ -69,7 +69,7 @@ const S = {
     position: relative;
     display: flex;
     flex-direction: column;
-    padding: 0 14px 20px 14px;
+    padding-bottom: 3px;
     align-items: center;
     align-self: stretch;
     z-index: 20;
@@ -143,7 +143,7 @@ const S = {
     width: 23px;
     height: 22px;
     color: ${({ $isTextInput, $disabled }) =>
-      $disabled ? "gray" : $isTextInput ? "#51A1CA" : "gray"};
+      $disabled ? "gray" : $isTextInput ? "#FF5200" : "gray"};
     cursor: ${({ $disabled }) => ($disabled ? "not-allowed" : "pointer")};
 
     flex-shrink: 0;
