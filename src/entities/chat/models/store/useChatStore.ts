@@ -55,28 +55,33 @@ export const useChatStore = create<ChatStore>((set, get) => ({
     const accumulated = { text: "" };
 
     // 2. SSE 스트림 받기 (예: EventSource 또는 fetch+stream)
-    const reader = await chatStreamApi(userMessage);
+    try {
+      const reader = await chatStreamApi(userMessage);
 
-    while (true) {
-      const { done, value } = await reader.read();
-      if (done) {
-        get().setIsLoading(false);
-        return;
-      }
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) {
+          get().setIsLoading(false);
+          return;
+        }
 
-      const chunk = decoder.decode(value, { stream: true });
-      const lines = chunk.split("\n");
+        const chunk = decoder.decode(value, { stream: true });
+        const lines = chunk.split("\n");
 
-      for (const line of lines) {
-        if (line.startsWith("data: ")) {
-          const data = JSON.parse(line.slice(6));
+        for (const line of lines) {
+          if (line.startsWith("data: ")) {
+            const data = JSON.parse(line.slice(6));
 
-          if (data.role === "assistant") {
-            accumulated.text += data.content;
-            get().updateWithStream(data.content);
+            if (data.role === "assistant") {
+              accumulated.text += data.content;
+              get().updateWithStream(data.content);
+            }
           }
         }
       }
+    } catch (error) {
+      console.error("Error in startSSEStream:", error);
+      get().setIsLoading(false);
     }
   },
 }));
