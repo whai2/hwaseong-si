@@ -5,6 +5,11 @@ import { chatStreamApi } from "@entities/chat/apis/chat.api";
 export interface ChatType {
   type: "user" | "assistant";
   message: string;
+  button?: {
+    title: string;
+    url: string;
+    description: string;
+  };
 }
 
 interface ChatStore {
@@ -13,6 +18,11 @@ interface ChatStore {
   setIsLoading: (isLoading: boolean) => void;
   setCurrentChat: (chat: ChatType) => void;
   updateWithStream: (message: string) => void;
+  updateWithButton: (button: {
+    title: string;
+    url: string;
+    description: string;
+  }) => void;
   startSSEStream: (userMessage: string) => void;
 }
 
@@ -45,6 +55,24 @@ export const useChatStore = create<ChatStore>((set, get) => ({
     }
   },
 
+  updateWithButton: (button: {
+    title: string;
+    url: string;
+    description: string;
+  }) => {
+    const session = get().session;
+    const lastMessage = session[session.length - 1];
+
+    set((state) => {
+      const updatedSession = [...state.session];
+      updatedSession[updatedSession.length - 1] = {
+        ...lastMessage,
+        button,
+      };
+      return { session: updatedSession };
+    });
+  },
+
   // SSE 스트림 시작 함수 추가
   startSSEStream: async (userMessage: string) => {
     // 1. user 메시지 먼저 추가
@@ -75,6 +103,13 @@ export const useChatStore = create<ChatStore>((set, get) => ({
             if (data.role === "assistant") {
               accumulated.text += data.content;
               get().updateWithStream(data.content);
+            }
+            if (data.role === "button") {
+              get().updateWithButton({
+                title: data.content.title,
+                url: data.content.url,
+                description: data.content.description,
+              });
             }
           }
         }

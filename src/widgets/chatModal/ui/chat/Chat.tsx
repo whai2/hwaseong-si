@@ -1,3 +1,5 @@
+import InnerButton from "./InnerButton";
+
 import { useChat } from "@features/chat";
 import { useControlScroll } from "./hooks/useControlScroll";
 
@@ -18,6 +20,7 @@ function Chat() {
             <S.Text $isChatbot={item.type === "assistant"}>
               {item.message}
             </S.Text>
+            {item.button && <InnerButton button={item.button} />}
           </S.MessageContainer>
         </S.MessagePosition>
       ))}

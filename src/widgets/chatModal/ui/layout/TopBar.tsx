@@ -27,12 +27,12 @@ function TopBar({ setVisible }: { setVisible: (visible: boolean) => void }) {
       ) : (
         <S.CloseIcon onClick={() => setVisible(false)} />
       )}
+      {currentPage === ROUTES.CHAT && title && (
+        <S.TitleContainer>
+          <S.Title>{title}</S.Title>
+        </S.TitleContainer>
+      )}
       <S.NavigationContainer>
-        {currentPage === ROUTES.CHAT && title && (
-          <S.TitleContainer>
-            <S.Title>{title}</S.Title>
-          </S.TitleContainer>
-        )}
         <S.Icon
           as={NewChatIcon}
           onClick={() => {
@@ -104,6 +104,8 @@ const S = {
     padding-right: 10px;
     padding-left: 10px;
     padding-top: 2px;
+    align-items: flex-start;
+    justify-content: flex-start;
   `,
 
   Title: styled.span`
