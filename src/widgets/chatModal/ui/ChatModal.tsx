@@ -1,5 +1,7 @@
 import { useState } from "react";
 
+import Layout from "./layout/Layout";
+
 import ChatIcon from "@shared/assets/logo.png";
 
 import { css, keyframes } from "@emotion/react";
@@ -16,7 +18,11 @@ function ChatModal() {
 
   return (
     <>
-      <S.Modal visible={visible} isFirst={isFirst}></S.Modal>
+      <S.Modal visible={visible} isFirst={isFirst}>
+        <Layout>
+          <div>123</div>
+        </Layout>
+      </S.Modal>
       <S.FloatingButton onClick={handleClick}>
         <S.Logo src={ChatIcon} alt="chat" />
       </S.FloatingButton>
@@ -35,7 +41,7 @@ const S = {
     height: calc(100vh - 116px);
     overflow: hidden;
     border-radius: 16px;
-    background-color: #F5F5F5;
+    background-color: #f5f5f5;
     z-index: 1000000000 !important;
     box-shadow: rgba(255, 255, 255, 0.12) 0px 0px 2px 0px inset,
       rgba(0, 0, 0, 0.05) 0px 0px 2px 1px, rgba(0, 0, 0, 0.3) 0px 12px 60px;
