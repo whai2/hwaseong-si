@@ -1,6 +1,8 @@
 import { useState } from "react";
 
 import Layout from "./layout/Layout";
+import Home from "./home/Home";
+// import Chat from "./chat/Chat";
 
 import ChatIcon from "@shared/assets/logo.png";
 
@@ -20,7 +22,8 @@ function ChatModal() {
     <>
       <S.Modal visible={visible} isFirst={isFirst}>
         <Layout>
-          <div>123</div>
+          <Home />
+          {/* <Chat /> */}
         </Layout>
       </S.Modal>
       <S.FloatingButton onClick={handleClick}>

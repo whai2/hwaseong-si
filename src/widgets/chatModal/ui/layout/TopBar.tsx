@@ -22,7 +22,7 @@ const S = {
   Container: styled.div`
     display: flex;
     width: 100%;
-    padding: 5px 5px;
+    padding: 14px 10px;
     justify-content: space-between;
     align-items: center;
   `,
@@ -31,7 +31,7 @@ const S = {
     display: flex;
     align-items: center;
     gap: 5px;
-    padding-right: 5px;
+    padding-right: 10px;
   `,
 
   Icon: styled.svg`

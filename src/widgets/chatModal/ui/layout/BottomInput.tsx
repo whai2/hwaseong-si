@@ -69,7 +69,7 @@ const S = {
     position: relative;
     display: flex;
     flex-direction: column;
-    padding-bottom: 3px;
+    padding: 0px 15px 15px 15px;
     align-items: center;
     align-self: stretch;
     z-index: 20;
